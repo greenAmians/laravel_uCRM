@@ -24,6 +24,10 @@ Route::get('/inertia-test', function () {
 // 追加
 Route::get('/inertia/index',[InertiaTestController::class, 'index'])->name('inertia.index');
 
+// ↓Linkルートパラメータ実装
+Route::get('/inertia/show/{id}',[InertiaTestController::class, 'show'])->name('inertia.show');
+
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
