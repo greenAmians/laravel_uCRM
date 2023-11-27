@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 // 追加
 use Inertia\Inertia;
+// Linkコンポーネントでstore保存
+use App\Models\InertiaTest;
 
 class InertiaTestController extends Controller
 {
@@ -24,5 +26,15 @@ class InertiaTestController extends Controller
             // 引数として入ってきた値をvue側に渡す
             'id' => $id
         ]);
+    }
+    // Linkコンポーネントでstore保存
+    public function store(Request $request)
+    {
+        $inertiaTest = new InertiaTest;
+        $inertiaTest->title = $request->title;
+        $inertiaTest->content = $request->content;
+        // DBに保存
+
+        return to_route('inertia.index');
     }
 }

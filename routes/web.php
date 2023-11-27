@@ -24,6 +24,10 @@ Route::get('/inertia-test', function () {
 // 追加
 Route::get('/inertia/index',[InertiaTestController::class, 'index'])->name('inertia.index');
 
+// Linkコンポーネントでsutore保存
+Route::post('/inertia',[InertiaTestController::class, 'index'])->name('inertia.store');
+
+
 // ↓Linkルートパラメータ実装
 Route::get('/inertia/show/{id}',[InertiaTestController::class, 'show'])->name('inertia.show');
 
