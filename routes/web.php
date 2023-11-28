@@ -24,12 +24,17 @@ Route::get('/inertia-test', function () {
 // 追加
 Route::get('/inertia/index',[InertiaTestController::class, 'index'])->name('inertia.index');
 
+//フォーム(create)
+Route::get('/inertia/create',[InertiaTestController::class, 'create'])->name('inertia.create');
+
+
 // Linkコンポーネントでsutore保存
 Route::post('/inertia',[InertiaTestController::class, 'store'])->name('inertia.store');
 
 
 // ↓Linkルートパラメータ実装
 Route::get('/inertia/show/{id}',[InertiaTestController::class, 'show'])->name('inertia.show');
+
 
 
 Route::get('/', function () {

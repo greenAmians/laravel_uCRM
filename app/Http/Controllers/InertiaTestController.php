@@ -15,6 +15,13 @@ class InertiaTestController extends Controller
     {
         return Inertia::render('Inertia/Index');
     }
+
+    //フォーム(create) 一般的にはindexメソッドの下に書くことがおおい
+    public function create()
+    {
+        return Inertia::render('Inertia/Create'); //コンポーネント
+    }
+
     public function show($id)
     {
         // dd()
