@@ -25,7 +25,7 @@ Route::get('/inertia-test', function () {
 Route::get('/inertia/index',[InertiaTestController::class, 'index'])->name('inertia.index');
 
 // Linkコンポーネントでsutore保存
-Route::post('/inertia',[InertiaTestController::class, 'index'])->name('inertia.store');
+Route::post('/inertia',[InertiaTestController::class, 'store'])->name('inertia.store');
 
 
 // ↓Linkルートパラメータ実装

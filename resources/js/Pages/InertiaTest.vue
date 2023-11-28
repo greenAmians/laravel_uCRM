@@ -2,6 +2,7 @@
 // C:\xampp\htdocs\uCRM\node_modules\@inertiajs\inertia-vue3\src\link.js
 import { Link } from '@inertiajs/inertia-vue3';
 // Linkコンポーネントでsutore保存
+// { ref }:vue3の機能　リアクティブなデータとして扱うことができる
 import { ref } from 'vue'
 
 const newTitle = ref('')
@@ -21,8 +22,10 @@ const newContent = ref ('')
 Inertiaテストです。<br>
 <a href="/">aタグ経由です</a><br>
 <Link href="/">Link経由です</Link><br>
+
 <!-- vue.jsの機能で、:hrefだと動的にリンクをかえることができる -->
 <Link :href="route('inertia.index')">名前付きルートの確認です</Link><br>
+
 <!-- ↓Linkルートパラメータ実装 -->
 <Link :href="route('inertia.show', { id: 1 })">ルートパラメータのテストです</Link>
 

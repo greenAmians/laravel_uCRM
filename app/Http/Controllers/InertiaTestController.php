@@ -34,7 +34,8 @@ class InertiaTestController extends Controller
         $inertiaTest->title = $request->title;
         $inertiaTest->content = $request->content;
         // DBに保存
-
+        $inertiaTest->save();
+        //laravel9の機能
         return to_route('inertia.index');
     }
 }
