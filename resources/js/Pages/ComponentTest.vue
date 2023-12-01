@@ -6,6 +6,7 @@ import Input from '@/Components/TextInput.vue'
 
 <template>
 <GuestLayout>
-    やっほー
+    <label value="件名">タイトル</label>
+    <Input modelValue="初期値が入ります"></Input>
 </GuestLayout>
 </template>
