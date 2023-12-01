@@ -21,6 +21,13 @@ Route::get('/inertia-test', function () {
     return Inertia::render('InertiaTest');
 }
 );
+
+// 他のコンポーネントを使ってみる
+Route::get('/component-test', function () {
+    return Inertia::render('ComponentTest');
+}
+);
+
 // 追加
 Route::get('/inertia/index',[InertiaTestController::class, 'index'])->name('inertia.index');
 
