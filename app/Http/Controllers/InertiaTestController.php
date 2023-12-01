@@ -48,6 +48,10 @@ class InertiaTestController extends Controller
         // DBに保存
         $inertiaTest->save();
         //laravel9の機能
-        return to_route('inertia.index');
+        //リダイレクトに続けてwithをつけ、セッションメッセージを渡すことができる
+        return to_route('inertia.index')
+        ->with([
+            'message' => '登録しました'
+        ]);
     }
 }

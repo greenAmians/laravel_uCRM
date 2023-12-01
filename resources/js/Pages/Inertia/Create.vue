@@ -25,6 +25,7 @@ const submitFunction = () => {
         
         <!-- エラー表示 -->
         <div v-if="errors.title">{{ errors.title }}</div>
+        <br>
         <input type="text" name="content" v-model="form.content">
         <div v-if="errors.content">{{ errors.content }}</div>
         <button>送信</button>
