@@ -34,7 +34,8 @@ class InertiaTestController extends Controller
         return Inertia::render('Inertia/Show',
         [
             // 引数として入ってきた値をvue側に渡す
-            'id' => $id
+            'id' => $id,
+            'blog' => InertiaTest::findOrFail($id)
         ]);
     }
     // Linkコンポーネントでstore保存処理
@@ -55,6 +56,20 @@ class InertiaTestController extends Controller
         return to_route('inertia.index')
         ->with([
             'message' => '登録しました'
+        ]);
+    }
+
+
+    // 削除処理
+    public function delete($id)
+    {
+        $book = InertiaTest::findOrFail($id);
+        // 削除完了
+        $book->delete();
+
+        return to_route('inertia.index')
+        ->with([
+            'message' => '削除しました'
         ]);
     }
 }

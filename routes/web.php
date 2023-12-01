@@ -35,6 +35,9 @@ Route::post('/inertia',[InertiaTestController::class, 'store'])->name('inertia.s
 // ↓Linkルートパラメータ実装
 Route::get('/inertia/show/{id}',[InertiaTestController::class, 'show'])->name('inertia.show');
 
+//イベントコールバック
+Route::delete('/inertia/{id}',[InertiaTestController::class, 'delete'])->name('inertia.delete');
+
 
 
 Route::get('/', function () {
