@@ -1,0 +1,33 @@
+<script setup>
+import { reactive } from 'vue';
+import { Inertia } from '@inertiajs/inertia'
+
+// 
+defineProps({
+    errors: Object
+})
+
+const form = reactive({
+    title: null,
+    content: null
+})
+
+// フォームを入力したときの処理
+const submitFunction = () => {
+    Inertia.post('/inertia', form)
+}
+
+</script>
+<template>
+    <!-- フォーム(create) -->
+    <form @submit.prevent="submitFunction">
+        <input type="text" name="title" v-model="form.title">
+        
+        <!-- エラー表示 -->
+        <div v-if="errors.title">{{ errors.title }}</div>
+        <br>
+        <input type="text" name="content" v-model="form.content">
+        <div v-if="errors.content">{{ errors.content }}</div>
+        <button>送信</button>
+    </form>
+</template>
