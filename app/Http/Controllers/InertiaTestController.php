@@ -13,7 +13,10 @@ class InertiaTestController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Inertia/Index');
+        //第二引数は連想配列でkeyとvalueを渡す
+        return Inertia::render('Inertia/Index',[
+            'blogs'=>InertiaTest::all()
+        ]);
     }
 
     //フォーム(create) 一般的にはindexメソッドの下に書くことがおおい
