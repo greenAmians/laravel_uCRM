@@ -17,7 +17,19 @@ class ItemController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Items/Index');
+        // 方法１
+        // //DBから取得
+        // $items = Item::select('id','name','price','is_selling')->get();
+
+        // // 取得したデータを返す
+        // return Inertia::render('Items/Index',[
+        //     'items' => $items
+        // ]);
+
+        //方法２　実行速度を配慮し、行数が少ない方法でかく
+        return Inertia::render('Items/Index',[
+            'items' => Item::select('id','name','price','is_selling')->get()
+        ]);
     }
 
     /**

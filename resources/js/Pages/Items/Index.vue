@@ -1,6 +1,11 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { Head } from "@inertiajs/vue3";
+
+// コントローラーから受け取る場合は「defineProps」
+defineProps({
+    items: Array,
+});
 </script>
 
 <template>
@@ -17,45 +22,62 @@ import { Head } from '@inertiajs/vue3';
                     <div class="p-6 text-gray-900">
                         <section class="text-gray-600 body-font">
                             <div class="container px-5 py-8 mx-auto">
+                                <div class="flex pl-4 mt-4 lg:w-2/3 w-full mx-auto">
+                                    <button
+                                        class="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded"
+                                    >
+                                        Button
+                                    </button>
+                                </div>
                                 <div class="lg:w-2/3 w-full mx-auto overflow-auto">
-                                    <table class="table-auto w-full text-left whitespace-no-wrap">
+                                    <table
+                                        class="table-auto w-full text-left whitespace-no-wrap"
+                                    >
                                         <thead>
                                             <tr>
                                                 <th
-                                                    class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
-                                                    Plan</th>
+                                                    class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"
+                                                >
+                                                    ID
+                                                </th>
                                                 <th
-                                                    class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                    Speed</th>
+                                                    class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"
+                                                >
+                                                    商品名
+                                                </th>
                                                 <th
-                                                    class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                    Storage</th>
+                                                    class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"
+                                                >
+                                                    価格
+                                                </th>
                                                 <th
-                                                    class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                    Price</th>
-                                                <th
-                                                    class="w-10 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">
+                                                    class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"
+                                                >
+                                                    ステータス
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="px-4 py-3">Start</td>
-                                                <td class="px-4 py-3">5 Mb/s</td>
-                                                <td class="px-4 py-3">15 GB</td>
-                                                <td class="px-4 py-3 text-lg text-gray-900">Free</td>
-                                                <td class="w-10 text-center">
-                                                    <input name="plan" type="radio">
+                                            <tr v-for="item in items" :key="item.id">
+                                                <td class="border-b-2 border-gray-200 px-4 py-3">{{ item.name }}</td>
+                                                <td class="border-b-2 border-gray-200 px-4 py-3">
+                                                <td class="border-b-2 border-gray-200 px-4 py-3">{{ item.id }}</td>
+                                                    {{ item.price }}
+                                                </td>
+                                                <td class="border-b-2 border-gray-200 px-4 py-3">
+                                                    <span v-if="item.is_selling === 1">販売中</span>
+                                                    <span v-if="item.is_selling === 0">停止中</span>
+                                                    <!-- {{ item.is_selling }} -->
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                            
-                        </div>
-                    </section>
+                            </div>
+                        </section>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</AuthenticatedLayout></template>
+    </AuthenticatedLayout>
+</template>
