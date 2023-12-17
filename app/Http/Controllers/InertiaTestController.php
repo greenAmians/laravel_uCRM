@@ -41,6 +41,7 @@ class InertiaTestController extends Controller
     // Linkコンポーネントでstore保存処理
     public function store(Request $request)
     {
+        // 連想配列でかいていく
         $request->validate([
             'title' => ['required','max:20'],
             'content' => ['required'],
