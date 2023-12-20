@@ -1,8 +1,9 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head } from "@inertiajs/vue3";
-import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
-import { nl2br } from `@/common`
+import { Head,Link } from "@inertiajs/vue3";
+// import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
+import { nl2br } from "@/common";
+// import route from "vendor/tightenco/ziggy/src/js";
 
 // コントローラーから受け取る場合は「defineProps」
 defineProps({
@@ -23,8 +24,7 @@ defineProps({
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <section class="text-gray-600 body-font relative">
-                        
-                        <form @submit.prevent="storeItem">
+                       
                             <div class="container px-5 py-8 mx-auto">
                                 <div class="lg:w-1/2 md:w-2/3 mx-auto">
                                     <div class="flex flex-wrap -m-2">
@@ -89,16 +89,15 @@ defineProps({
                                         </div>
 
                                         <div class="p-2 w-full">
-                                            <button
+                                            <Link as="button" :href="route('items.edit',{ item: item.id })"
                                                 class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
                                             >
-                                                商品登録
-                                            </button>
+                                                編集する
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </form>
                         </section>
                     </div>
                 </div>
