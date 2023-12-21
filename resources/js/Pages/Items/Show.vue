@@ -4,11 +4,19 @@ import { Head,Link } from "@inertiajs/vue3";
 // import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import { nl2br } from "@/common";
 // import route from "vendor/tightenco/ziggy/src/js";
+import { Inertia } from '@inertiajs/inertia';
 
 // コントローラーから受け取る場合は「defineProps」
 defineProps({
     item : Object
 })
+
+// 削除
+const deleteItem = id => {
+    Inertia.delete(route('items.destroy',{ item: id }),{
+        onBefore: () => confirm('本当に削除しますか')
+    })
+}
 </script>
 
 <template>
@@ -91,9 +99,11 @@ defineProps({
                                         <div class="p-2 w-full">
                                             <Link as="button" :href="route('items.edit',{ item: item.id })"
                                                 class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
-                                            >
-                                                編集する
-                                            </Link>
+                                            >編集する</Link>
+                                        </div>
+                                        <div class="mt-20 p-2 w-full">
+                                            <button @click="deleteItem(item.id)" class="flex mx-auto text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg"
+                                            >削除する</button>
                                         </div>
                                     </div>
                                 </div>
