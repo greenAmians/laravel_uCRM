@@ -5,7 +5,10 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+// import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import { Head, useForm } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/inertia-vue3';
+import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 
 defineProps({
     canResetPassword: Boolean,
@@ -28,6 +31,9 @@ const submit = () => {
 <template>
     <GuestLayout>
         <Head title="Log in" />
+
+        <!-- 追記 -->
+        <BreezeValidationErrors class="mb-4" />
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
