@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
@@ -15,13 +16,16 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // $getTest = Customer::select('id','name','kana','tel')->get();
         // $getPaginate = Customer::select('id','name','kana','tel')->paginate(50);
         // dd($getTest,$getPaginate);
+
+        $customers = Customer::SearchCustomers($request->search)->select('id','name','kana','tel')->paginate(50);
+        // dd($customers);
         return Inertia::render('Customers/Index',[
-            'customers' => Customer::select('id','name','kana','tel')->paginate(50)
+            'customers' => $customers
         ]);
         
     }

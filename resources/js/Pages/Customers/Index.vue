@@ -3,11 +3,19 @@ import FlashMessage from "@/Components/FlashMessage.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link } from "@inertiajs/vue3";
 import Pagination from "@/Components/Pagination.vue";
+import { ref } from "vue";
+import { Inertia } from "@inertiajs/inertia";
 
 // コントローラーから受け取る場合は「defineProps」
 defineProps({
     customers: Object,
 });
+
+const search = ref("");
+// ref の値を取得するには .valueが必要
+const searchCustomers = () => {
+    Inertia.get(route("customers.index", { search: search.value }));
+};
 </script>
 
 <template>
@@ -24,9 +32,30 @@ defineProps({
                     <div class="p-6 text-gray-900">
                         <section class="text-gray-600 body-font">
                             <div class="container px-5 py-8 mx-auto">
-                            <FlashMessage />
+                                <FlashMessage />
                                 <div class="flex pl-4 mt-4 lg:w-2/3 w-full mx-auto">
-                                    <Link as="button" :href="route('customers.create')" class="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded">顧客登録</Link>
+                                    <div>
+                                        <input
+                                        class="px-4 py-3 mb-4 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded"
+                                            type="text"
+                                            name="search"
+                                            v-model="search"
+                                            placeholder="カナ・電話番号"
+
+                                        />
+                                        <button
+                                            class="bg-green-500 text-white py-3 px-4 mb-4 border-0 rounded"
+                                            @click="searchCustomers"
+                                        >
+                                            検索
+                                        </button>
+                                    </div>
+                                    <Link
+                                        as="button"
+                                        :href="route('customers.create')"
+                                        class="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 mb-4 focus:outline-none hover:bg-green-600 rounded"
+                                        >顧客登録</Link
+                                    >
                                 </div>
                                 <div class="lg:w-2/3 w-full mx-auto overflow-auto">
                                     <table
@@ -57,18 +86,40 @@ defineProps({
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="customer in customers.data" :key="customer.id">
-                                                <td class="border-b-2 border-gray-200 px-4 py-3">{{ customer.id }}</td>
+                                            <tr
+                                                v-for="customer in customers.data"
+                                                :key="customer.id"
+                                            >
+                                                <td
+                                                    class="border-b-2 border-gray-200 px-4 py-3"
+                                                >
+                                                    {{ customer.id }}
+                                                </td>
 
-                                                <td class="border-b-2 border-gray-200 px-4 py-3">{{ customer.name }}</td>
-                                                <td class="border-b-2 border-gray-200 px-4 py-3">{{ customer.kana }}</td>
-                                                <td class="border-b-2 border-gray-200 px-4 py-3">{{ customer.tel }}</td>
+                                                <td
+                                                    class="border-b-2 border-gray-200 px-4 py-3"
+                                                >
+                                                    {{ customer.name }}
+                                                </td>
+                                                <td
+                                                    class="border-b-2 border-gray-200 px-4 py-3"
+                                                >
+                                                    {{ customer.kana }}
+                                                </td>
+                                                <td
+                                                    class="border-b-2 border-gray-200 px-4 py-3"
+                                                >
+                                                    {{ customer.tel }}
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <Pagination class="mt-6" :links="customers.links"></Pagination>
+                            <Pagination
+                                class="mt-6"
+                                :links="customers.links"
+                            ></Pagination>
                         </section>
                     </div>
                 </div>
