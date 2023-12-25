@@ -5,12 +5,12 @@ import { ref, reactive, onMounted } from "vue";
 const search = ref("");
 const customers = reactive({});
 
-onMounted(() => {
-  axios.get('/api/user')
-  .then( res => {
-    console.log(res.data)
-  })
-})
+// onMounted(() => {
+//   axios.get('/api/user')
+//   .then( res => {
+//     console.log(res.data)
+//   })
+// })
 
 const isShow = ref(false);
 const toggleStatus = () => {
@@ -19,12 +19,14 @@ const toggleStatus = () => {
 
 const searchCustomers = async () => {
     try {
+        // await axios通信がくるまで待つ
         await axios.get(`/api/searchCustomers/?search=${search.value}`).then((res) => {
             console.log(res.data);
             customers.value = res.data;
         });
         toggleStatus();
     } catch (e) {
+        // DB通信がうまくいかなかった場合
         console.log(e);
     }
 };
@@ -33,6 +35,7 @@ const emit = defineEmits(["update:customerId"]);
 
 const setCustomer = (e) => {
     search.value = e.kana;
+    // emit()親のコンポーネントに渡す
     emit("update:customerId", e.id);
     toggleStatus();
 };

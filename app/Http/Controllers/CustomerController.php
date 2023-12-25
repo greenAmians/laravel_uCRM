@@ -22,7 +22,8 @@ class CustomerController extends Controller
         // $getPaginate = Customer::select('id','name','kana','tel')->paginate(50);
         // dd($getTest,$getPaginate);
 
-        $customers = Customer::SearchCustomers($request->search)->select('id','name','kana','tel')->paginate(50);
+        $customers = Customer::SearchCustomers($request->search)
+        ->select('id','name','kana','tel')->paginate(50);
         // dd($customers);
         return Inertia::render('Customers/Index',[
             'customers' => $customers

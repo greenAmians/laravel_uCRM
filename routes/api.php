@@ -18,6 +18,7 @@ Route::middleware('auth:sanctum')
 ->get('/searchCustomers', function (Request $request) {
     return Customer::SearchCustomers($request->search)->select('id','name','kana','tel')->paginate(50);
 });
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
