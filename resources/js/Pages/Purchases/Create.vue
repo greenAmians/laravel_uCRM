@@ -64,7 +64,7 @@ const setCustomerId = id => {
 <template>
     <Head title="購入画面" />
 
-    <BreezeAuthenticatedLayout>
+    <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 購入画面
@@ -148,5 +148,5 @@ const setCustomerId = id => {
                 </div>
             </div>
         </div>
-    </BreezeAuthenticatedLayout>
+        </AuthenticatedLayout>
 </template>
