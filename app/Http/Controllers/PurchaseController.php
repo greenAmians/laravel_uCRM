@@ -23,10 +23,10 @@ class PurchaseController extends Controller
     {
         // dd(Order::paginate());
         $orders = Order::groupBy('id')
-        ->selectRaw('id, sum(subtotal) as total,customer_name, status, created_at')
-        ->paginate(50);
+            ->selectRaw('id, sum(subtotal) as total,customer_name, status, created_at')
+            ->paginate(50);
 
-        return Inertia::render('Purchases/Index',[
+        return Inertia::render('Purchases/Index', [
             'orders' => $orders
         ]);
 
@@ -92,7 +92,19 @@ class PurchaseController extends Controller
      */
     public function show(Purchase $purchase)
     {
-        //
+        // 小計
+        $items = Order::where('id', $purchase->id)->get();
+
+        //合計
+        $order = Order::groupBy('id')
+            ->where('id', $purchase->id)
+            ->selectRaw('id, sum(subtotal) as total,customer_name, status, created_at')
+            ->get();
+
+        return Inertia::render('Purchases/Show', [
+            'items' => $items,
+            'order' => $order
+        ]);
     }
 
     /**

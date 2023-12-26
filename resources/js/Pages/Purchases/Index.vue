@@ -6,6 +6,7 @@ import Pagination from "@/Components/Pagination.vue";
 import { ref,onMounted } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import dayjs from 'dayjs'
+
 const props = defineProps({
     orders: Object
 })
@@ -89,7 +90,7 @@ onMounted(() => {
                                                 <td
                                                     class="border-b-2 border-gray-200 px-4 py-3"
                                                 >
-                                                    {{ order.id }}
+                                                <Link class="text-blue-400" :href="route('purchases.show', { purchase: order.id })">{{ order.id }}</Link>
                                                 </td>
 
                                                 <td
