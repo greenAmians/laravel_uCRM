@@ -1,6 +1,5 @@
 <?php
-
-use App\Models\Customer;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -9,7 +8,9 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\AnalysisController;
-// use App\Http\Controllers\Api\AnalysisController;
+
+use App\Models\Customer;
+
 
 
 // 認証していたら表示
