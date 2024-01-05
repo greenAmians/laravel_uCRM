@@ -31,7 +31,7 @@ const getData = async () => {
             .then(res => {
                 data.data = res.data.data;
                 data.labels = res.data.labels;
-                data.data = res.data.data;
+                data.totals = res.data.totals;
                 console.log(res.data);
             });
     } catch (e) {
