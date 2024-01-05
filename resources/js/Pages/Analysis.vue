@@ -30,7 +30,9 @@ const getData = async () => {
             })
             .then(res => {
                 data.data = res.data.data;
-                // console.log(res.data);
+                data.labels = res.data.labels;
+                data.data = res.data.data;
+                console.log(res.data);
             });
     } catch (e) {
         console.log(e.message);
@@ -66,7 +68,7 @@ const getData = async () => {
                             </button>
                         </form>
 
-                        <Chart />
+                        <Chart :data="data" />
 
                         <div v-if="data.data"
                         class="lg:w-2/3 w-full mx-auto overflow-auto">
