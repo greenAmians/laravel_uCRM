@@ -15,19 +15,23 @@ class AnalysisController extends Controller
     {
 
         $subQuery = Order::betweenDate($request->startDate, $request->endDate);
-        
+
         if ($request->type === 'perDay') {
-            $subQuery->where('status', true)->groupBy('id')->selectRaw('SUM(subtotal) AS 
-       totalPerPurchase, DATE_FORMAT(created_at, "%Y%m%d") AS date')->groupBy('date');
-            
+            $subQuery->where('status', true)
+            ->groupBy('id')
+            ->selectRaw('id, SUM(subtotal) AS 
+            totalPerPurchase, DATE_FORMAT(created_at, "%Y%m%d") AS date');
+
             $data = DB::table($subQuery)
                 ->groupBy('date')
                 ->selectRaw('date, sum(totalPerPurchase) as total')
                 ->get();
         }
         return response()->json(
-            ['data' => $data,
-            'type' => $request->type],
+            [
+                'data' => $data,
+                'type' => $request->type
+            ],
             Response::HTTP_OK
         );
     }
