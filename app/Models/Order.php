@@ -17,7 +17,23 @@ class Order extends Model
 
     public function scopeBetweenDate($query, $startDate = '0000-00-00', $endDate = '9999-99-99')
     {
-        return $query->where('created_at', '>=', $startDate)
-            ->where('created_at', '<=', $endDate . ' 23:59:59');
+        if(is_null($startDate) && is_null($endDate))
+        { return $query; }
+
+        if(!is_null($startDate) && is_null($endDate))
+        {  return $query->where('created_at', ">=", $startDate); }
+
+        if(is_null($startDate) && !is_null($endDate))
+        {
+            $endDate1 = Carbon::parse($endDate)->addDays(1);
+            return $query->where('created_at', '<=', $endDate1);
+        }
+
+        if(!is_null($startDate) && !is_null($endDate))
+        {
+            $endDate1 = Carbon::parse($endDate)->addDays(1);
+            return $query->where('created_at', ">=", $startDate)
+            ->where('created_at', '<=', $endDate1);
+        }
     }
 }

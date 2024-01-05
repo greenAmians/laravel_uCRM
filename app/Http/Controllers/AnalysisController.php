@@ -21,7 +21,7 @@ class AnalysisController extends Controller
         ->where('status', true)
         ->groupBy('id')
         ->selectRaw('id, SUM(subtotal) as totalPerPurchase, 
-        DATE_FORMAT(created_at, "%Y%m%d") as date');
+            DATE_FORMAT(created_at, "%Y%m%d") as date'); 
 
         $data = DB::table($subQuery)
         ->groupBy('date')
