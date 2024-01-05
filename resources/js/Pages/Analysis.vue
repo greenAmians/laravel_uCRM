@@ -3,6 +3,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import { reactive, onMounted } from "vue";
 import { getToday } from "@/common";
+import Chart from '@/Components/Chart.vue'
 
 onMounted(() => {
     form.startDate = getToday();
@@ -64,6 +65,8 @@ const getData = async () => {
                                 分析する
                             </button>
                         </form>
+
+                        <Chart />
 
                         <div v-if="data.data"
                         class="lg:w-2/3 w-full mx-auto overflow-auto">
