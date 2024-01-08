@@ -30,11 +30,21 @@ class AnalysisController extends Controller
 
         //dd($data);
 
+
+
+        return Inertia::render('Analysis');
+    }
+
+    public function decile()
+    {
+        $startDate = '2022-08-01';
+        $endDate = '2022-08-31';
+        
         // 1. 購買ID毎にまとめる 
         $subQuery = Order::betweenDate($startDate, $endDate)
             ->groupBy('id')
             ->selectRaw('id, customer_id, customer_name, SUM(subtotal) as 
-                            totalPerPurchase');
+                totalPerPurchase');
 
         // 2. 会員毎にまとめて購入金額順にソートする 
         $subQuery = DB::table($subQuery)
@@ -51,10 +61,10 @@ as total')
         DB::statement('set @row_num = 0;');
         $subQuery = DB::table($subQuery)
             ->selectRaw(' 
-                @row_num:= @row_num+1 as row_num, 
-                customer_id, 
-                customer_name, 
-                total');
+            @row_num:= @row_num+1 as row_num, 
+            customer_id, 
+            customer_name, 
+            total');
 
         // dd($subQuery);
 
@@ -77,23 +87,23 @@ as total')
         DB::statement('set @row_num = 0;');
         $subQuery = DB::table($subQuery)
             ->selectRaw(" 
-                row_num, 
-                customer_id, 
-                customer_name, 
-                total, 
-                case 
-                when ? <= row_num and row_num < ? then 1 
-                when ? <= row_num and row_num < ? then 2 
-                when ? <= row_num and row_num < ? then 3 
-                when ? <= row_num and row_num < ? then 4 
-                when ? <= row_num and row_num < ? then 5 
-                when ? <= row_num and row_num < ? then 6 
-                when ? <= row_num and row_num < ? then 7 
-                when ? <= row_num and row_num < ? then 8 
-                when ? <= row_num and row_num < ? then 9 
-                when ? <= row_num and row_num < ? then 10 
-                end as decile 
-                ", $bindValues); // SelectRaw第二引数にバインドしたい数値(配列)をいれる
+            row_num, 
+            customer_id, 
+            customer_name, 
+            total, 
+            case 
+            when ? <= row_num and row_num < ? then 1 
+            when ? <= row_num and row_num < ? then 2 
+            when ? <= row_num and row_num < ? then 3 
+            when ? <= row_num and row_num < ? then 4 
+            when ? <= row_num and row_num < ? then 5 
+            when ? <= row_num and row_num < ? then 6 
+            when ? <= row_num and row_num < ? then 7 
+            when ? <= row_num and row_num < ? then 8 
+            when ? <= row_num and row_num < ? then 9 
+            when ? <= row_num and row_num < ? then 10 
+            end as decile 
+            ", $bindValues); // SelectRaw第二引数にバインドしたい数値(配列)をいれる
 
         // dd($subQuery);
 
@@ -102,19 +112,18 @@ as total')
         $subQuery = DB::table($subQuery)
             ->groupBy('decile')
             ->selectRaw('decile, 
-                round(avg(total)) as average, 
-                sum(total) as totalPerGroup');
+            round(avg(total)) as average, 
+            sum(total) as totalPerGroup');
 
         // 7 構成比 
         DB::statement("set @total = ${total} ;");
         $data = DB::table($subQuery)
             ->selectRaw('decile, 
-                average, 
-                totalPerGroup, 
-                round(100 * totalPerGroup / @total, 1) as 
-                totalRatio 
-                ')
+            average, 
+            totalPerGroup, 
+            round(100 * totalPerGroup / @total, 1) as 
+            totalRatio 
+            ')
             ->get();
-        return Inertia::render('Analysis');
     }
 }

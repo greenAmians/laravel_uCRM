@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Order;
 use App\Services\AnalysisService;
+use App\Services\DecileService;
 use Illuminate\Support\Facades\DB;
 
 class AnalysisController extends Controller
@@ -21,15 +22,19 @@ class AnalysisController extends Controller
             list($data, $labels, $totals) = AnalysisService::perDay($subQuery);
         }
         // 月ごと
-        if($request->type === 'perMonth'){
+        if ($request->type === 'perMonth') {
             list($data, $labels, $totals) = AnalysisService::perMonth($subQuery);
-         }
+        }
 
         // 年ごと
-         if($request->type === 'perYear'){
+        if ($request->type === 'perYear') {
             list($data, $labels, $totals) = AnalysisService::perYear($subQuery);
-         }
+        }
 
+        // デシル分析
+        if ($request->type === 'decile') {
+            list($data, $labels, $totals) = DecileService::decile($subQuery);
+        }
         return response()->json(
             [
                 'data' => $data,
