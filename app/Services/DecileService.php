@@ -17,13 +17,13 @@ class DecileService
         // 1. 購買ID毎にまとめる 
         $subQuery = $subQuery->groupBy('id')
             ->selectRaw('id, customer_id, customer_name, 
- SUM(subtotal) as totalPerPurchase');
+                        SUM(subtotal) as totalPerPurchase');
 
         // 2. 会員毎にまとめて購入金額順にソートする
         $subQuery = DB::table($subQuery)
             ->groupBy('customer_id')
             ->selectRaw('customer_id, customer_name, 
- sum(totalPerPurchase) as total')
+                        sum(totalPerPurchase) as total')
             ->orderBy('total', 'desc');
 
         // dd($subQuery);
@@ -32,10 +32,10 @@ class DecileService
         DB::statement('set @row_num = 0;');
         $subQuery = DB::table($subQuery)
             ->selectRaw('
- @row_num:= @row_num+1 as row_num,
- customer_id,
- customer_name,
- total');
+                        @row_num:= @row_num+1 as row_num,
+                        customer_id,
+                        customer_name,
+                        total');
 
         // dd($subQuery);
 
