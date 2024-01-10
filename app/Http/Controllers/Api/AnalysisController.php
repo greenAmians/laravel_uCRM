@@ -9,6 +9,8 @@ use Illuminate\Http\Response;
 use App\Models\Order;
 use App\Services\AnalysisService;
 use App\Services\DecileService;
+use App\Services\RFMService;
+
 use Illuminate\Support\Facades\DB;
 
 class AnalysisController extends Controller
@@ -17,32 +19,38 @@ class AnalysisController extends Controller
     {
 
         $subQuery = Order::betweenDate($request->startDate, $request->endDate);
-
+        
         if ($request->type === 'perDay') {
             list($data, $labels, $totals) = AnalysisService::perDay($subQuery);
         }
-        // 月ごと
+
         if ($request->type === 'perMonth') {
             list($data, $labels, $totals) = AnalysisService::perMonth($subQuery);
         }
 
-        // 年ごと
         if ($request->type === 'perYear') {
             list($data, $labels, $totals) = AnalysisService::perYear($subQuery);
         }
 
-        // デシル分析
         if ($request->type === 'decile') {
             list($data, $labels, $totals) = DecileService::decile($subQuery);
         }
-        return response()->json(
-            [
+
+        if ($request->type === 'rfm') {
+            list($data, $totals, $eachCount) = RFMService::rfm($subQuery, $request->rfmPrms);
+
+            return response()->json([
                 'data' => $data,
                 'type' => $request->type,
-                'labels' => $labels,
+                'eachCount' => $eachCount,
                 'totals' => $totals,
-            ],
-            Response::HTTP_OK
-        );
+            ], Response::HTTP_OK);
+        }
+        return response()->json([
+            'data' => $data,
+            'type' => $request->type,
+            'labels' => $labels,
+            'totals' => $totals,
+        ], Response::HTTP_OK);
     }
 }
